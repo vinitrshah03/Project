@@ -11,7 +11,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 JS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'static', 'js'))
 
-NODE_PATH = r"C:\Program Files\nodejs\node.exe"
+NODE_PATH = r"C:\<your_node_path>\nodejs\node.exe"
 
 class TestJSValidation(unittest.TestCase):
 
