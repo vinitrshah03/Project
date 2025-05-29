@@ -2,14 +2,14 @@ const CONFIGURATION = {
     "locations": [
       {
         "title": "I am here",
-        "address1": "1, Atur Centre, Gokhale Rd, Model Colony",
-        "address2": "Shivajinagar, Pune, Maharashtra 411016, India",
-        "coords": { "lat": 18.5294, "lng": 73.8416 },
-        "placeId": "ChIJm7p8MgXWwjsRBn06snOz95A"
+        "address1": "<your_address>",
+        "address2": "<your_address>",
+        "coords": { "lat": <your_coords>, "lng": <your_coords> },
+        "placeId": "<your_place_ID>"
       }
     ],
     "mapOptions": {
-      "center": { "lat": 18.5294, "lng": 73.8416 },
+      "center": { "lat": <your_coords>, "lng": <your_coords> },
       "fullscreenControl": true,
       "mapTypeControl": false,
       "streetViewControl": false,
@@ -18,7 +18,7 @@ const CONFIGURATION = {
       "maxZoom": 17,
       "mapId": ""
     },
-    "mapsApiKey": "AIzaSyCKreGefLNeCmau3sxt678RXFf5azvmQbg",
+    "mapsApiKey": "<your_API_key>",
     "capabilities": {
       "input": false,
       "autocomplete": false,
