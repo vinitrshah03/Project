@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Contact</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+    </head>
+    <body>
+        <header>
+            <div class="company-logo">SecureX</div>
+            <nav class="navbar">
+            <ul class="nav-items">
+                <li class="nav-item"><a href="{{url_for('home')}}" class="nav-link">HOME</a></li>
+                <li class="nav-item"><a href="{{url_for('services')}}" class="nav-link">SERVICES</a></li>
+            </ul>
+            </nav>
+            <div class="menu-toggle">
+            <i class="bx bx-menu"></i>
+            <i class="bx bx-x"></i>
+            </div>
+        </header>
+        <br><br>
+        <gmpx-api-loader key="AIzaSyCKreGefLNeCmau3sxt678RXFf5azvmQbg" solution-channel="GMP_QB_locatorplus_v11_c"></gmpx-api-loader>   
+        <gmpx-store-locator map-id="DEMO_MAP_ID"></gmpx-store-locator>
+        <script type="module" src="https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.11/index.min.js"></script>
+        <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+        <br><br>
+        <div class="contact-info">
+            <h2>Contact Us</h2>
+            <p><strong>Email:</strong> <a href="mailto:vis2221247@sicsr.ac.in">vis2221247@sicsr.ac.in</a></p>
+            <p><strong>Phone:</strong> <a href="tel:+919876543210">+91 98765 43210</a></p>
+        </div>        
+        <br><br>
+        <footer>
+            <div class="footer-links">
+                <a href="{{url_for('search_exploit')}}">Search in Shodan</a>
+                <a href="{{url_for('password_checker_tool')}}">Passwords</a>
+                <a href="{{url_for('cve')}}">Search CVE</a>
+                <a href="{{url_for('cpe')}}">Search CPE</a>
+            </div>
+            <div class="footer-social">
+                <a href="{{ url_for('follow_facebook') }}" class="footer-icon">
+                    <img src="{{ url_for('static', filename='images/fb_logo.png') }}" alt="Facebook Logo">
+                </a>
+                <a href="{{ url_for('follow_instagram') }}" class="footer-icon">
+                    <img src="{{ url_for('static', filename='images/insta_logo.png') }}" alt="Instagram Logo">
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>

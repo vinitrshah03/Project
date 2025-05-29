@@ -1,0 +1,32 @@
+<form id="rec-form">
+    <input type="text" name="query" placeholder="Enter your search" />
+    <button type="submit">Get Recommendations</button>
+  </form>
+  
+  <div id="results"></div>
+  
+  <script>
+  document.getElementById('rec-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const res = await fetch('/recommend', { method: 'POST', body: formData });
+      const data = await res.json();
+  
+      const results = document.getElementById('results');
+      results.innerHTML = '';
+      data.forEach(item => {
+          const div = document.createElement('div');
+          div.innerHTML = `<p>${item.title}</p><button onclick="logInteraction(${item.item_id})">View</button>`;
+          results.appendChild(div);
+      });
+  });
+  
+  async function logInteraction(itemId) {
+      await fetch('/interact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `item_id=${itemId}`
+      });
+  }
+  </script>
+  

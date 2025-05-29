@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | SecureX</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/register.css') }}">
+    <script src="{{ url_for('static', filename='js/home.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/register.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <div class="company-logo">SecureX</div>
+        <nav class="navbar">
+        <ul class="nav-items">
+            <li class="nav-item"><a href="{{url_for('services')}}" class="nav-link">SERVICES</a></li>
+            <li class="nav-item"><a href="{{url_for('contact')}}" class="nav-link">CONTACT</a></li>
+            <li class="nav-item"><a href="{{url_for('login')}}" class="nav-link">LOGIN</a></li>
+        </ul>
+        </nav>
+        <div class="menu-toggle">
+        <i class="bx bx-menu"></i>
+        <i class="bx bx-x"></i>
+        </div>
+    </header>
+
+    <br><br>
+    <script>
+        const loginUrl = "{{ url_for('login') }}";
+    </script>
+    <div class="wrapper">
+        <div class="register is-active">
+            <form id="registerForm" action="{{ url_for('register') }}" method="POST">
+                <h2 class="register-title">Register</h2>
+    
+                <hr class="form-line"> 
+                
+                <div class="form-element">
+                    <span><i class="fa fa-user"></i></span>
+                    <input type="text" id="username" name="username" placeholder="Full Name" required>
+                    <span class="error" id="usernameError"></span>
+                </div>
+    
+                <div class="form-element">
+                    <span><i class="fa fa-envelope"></i></span>
+                    <input type="email" id="email" name="email" placeholder="Your Email Address" required>
+                    <span class="error" id="emailError"></span>
+                </div>
+    
+                <div class="form-element">
+                    <span><i class="fa fa-lock"></i></span>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <span class="error" id="passwordError"></span>
+                </div>
+    
+                <div class="form-element">
+                    <span><i class="fa fa-lock"></i></span>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Re-Enter Password" required>
+                    <span class="error" id="confirmPasswordError"></span>
+                </div>
+    
+                <hr class="form-line">
+    
+                <button type="submit" class="btn-register">Continue</button>
+
+                <hr class="form-line">
+            </form>
+        </div>
+    </div>
+    
+
+    
+    <br><br>
+
+    <footer>
+        <div class="footer-links">
+            <a href="{{url_for('search_exploit')}}">Search in Shodan</a>
+            <a href="{{url_for('password_checker_tool')}}">Passwords</a>
+            <a href="{{url_for('cve')}}">Search CVE</a>
+            <a href="{{url_for('cpe')}}">Search CPE</a>
+        </div>
+        <div class="footer-social">
+            <a href="{{ url_for('follow_facebook') }}" class="footer-icon">
+                <img src="{{ url_for('static', filename='images/fb_logo.png') }}" alt="Facebook Logo">
+            </a>
+            <a href="{{ url_for('follow_instagram') }}" class="footer-icon">
+                <img src="{{ url_for('static', filename='images/insta_logo.png') }}" alt="Instagram Logo">
+            </a>
+        </div>
+    </footer>
+</body>
+</html>

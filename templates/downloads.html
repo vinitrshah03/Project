@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Downloads</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+    </head>
+    <body>
+        <header>
+            <div class="company-logo">SecureX</div>
+            <nav class="navbar">
+                <ul class="nav-items">
+                    <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link">HOME</a></li>
+                    <li class="nav-item"><a href="{{ url_for('services') }}" class="nav-link">SERVICES</a></li>
+                    <li class="nav-item"><a href="{{ url_for('contact') }}" class="nav-link">CONTACT</a></li>
+                    <li class="nav-item"><a href="{{ url_for('logout') }}" class="nav-link">LOGOUT</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="downloads-section" style="text-align: center; width: 80%; margin: auto; padding: 20px;">
+            <h2>📂 Download Security Lists</h2>
+            <p>Click on the links below to download security-related files:</p>
+
+            <ul class="download-list" style="list-style: none; padding: 0;">
+                <li><a href="{{ url_for('download_file', filename='official-cpe-dictionary_v2.2.xml.zip') }}" class="download-btn">📥 Download CPE v2.2 List</a></li>
+                <li><a href="{{ url_for('download_file', filename='official-cpe-dictionary_v2.3.xml.zip') }}" class="download-btn">📥 Download CPE v2.3 List</a></li>
+                <li><a href="{{ url_for('download_file', filename='10K-most-common.txt') }}" class="download-btn">📥 Download Common Passwords List</a></li>
+            </ul>
+        </div>
+
+<div class="keylogger-sandbox">
+    <h2>🎯 Keylogger Sandbox</h2>
+
+    <!-- Warning/Disclaimer -->
+    <div class="keylogger-warning">
+        ⚠️ This sandbox is for educational and ethical use only.  
+        All keylogs are stored temporarily for demonstration purposes only!
+
+        Please refrain from entering your sensitive information!!
+    </div>
+
+    <!-- Live Timer -->
+    <div id="sandbox-timer">Timer: 30s</div>
+
+    <div id="log-display" style="display: none; margin-top: 20px;">
+        <h3>📝 Your Recorded Keystrokes:</h3>
+        <textarea id="log-content" readonly style="width: 100%; height: 200px; resize: none; padding: 10px; font-size: 16px;"></textarea>
+    </div>
+
+    <button type="button" id="start-button">Start Keylogger</button>
+</div>
+
+<!-- CSS for Sandbox -->
+<style>
+.keylogger-sandbox {
+    margin: 50px auto;
+    padding: 30px;
+    max-width: 600px;
+    background-color: #f7f7f7;
+    border: 2px dashed #4CAF50;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.keylogger-sandbox h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.keylogger-warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+#sandbox-timer {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #ff5722;
+    font-weight: bold;
+}
+
+#log-content {
+    background-color: #eef2f7;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+</style>
+
+<!-- JavaScript for Sandbox -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let timerElement = document.getElementById('sandbox-timer');
+            let logDisplay = document.getElementById('log-display');
+            let logContent = document.getElementById('log-content');
+            let startButton = document.getElementById('start-button');
+            let countdown = 30;
+            let timerInterval;
+            let isKeyloggerActive = false;
+        
+            startButton.addEventListener('click', function () {
+                if (isKeyloggerActive) {
+                    alert('⚠️ Keylogger is already running! Please wait until the current session ends.');
+                    return;
+                }
+        
+                isKeyloggerActive = true;
+                countdown = 30;
+                timerElement.textContent = 'Timer: ' + countdown + 's';
+                alert('🔴 Keylogger started! Start typing...');
+        
+                startButton.disabled = true;
+        
+                fetch('/start_keylogger', { method: 'POST' })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log('Keylogger started on backend');
+                        startCountdown();
+                    })
+                    .catch(error => {
+                        console.error('Error starting keylogger:', error);
+                    });
+            });
+        
+            function startCountdown() {
+                timerInterval = setInterval(function () {
+                    countdown--;
+                    timerElement.textContent = 'Timer: ' + countdown + 's';
+        
+                    if (countdown <= 0) {
+                        clearInterval(timerInterval);
+                        timerElement.textContent = 'Session Ended!';
+                        isKeyloggerActive = false;
+                        startButton.disabled = false; 
+                        alert('🛑 Keylogger stopped! Fetching your recorded keystrokes...');
+                        fetchLog();
+                    }
+                }, 1000);
+            }
+        
+            function fetchLog() {
+                fetch('/fetch_log')
+                    .then(response => response.text())
+                    .then(data => {
+                        logContent.value = data;
+                        logDisplay.style.display = 'block';
+                    })
+                    .catch(error => {
+                        logContent.value = 'Error fetching log.';
+                        logDisplay.style.display = 'block';
+                    });
+            }
+        });
+    </script>
+    
+
+        <footer>
+            <div class="footer-links">
+                <a href="{{ url_for('login') }}">Search in Shodan</a>
+                <a href="{{ url_for('login') }}">Passwords</a>
+                <a href="{{ url_for('login') }}">Search CVE</a>
+                <a href="{{ url_for('login') }}">Search CPE</a>
+            </div>
+        </footer>
+    </body>
+</html>

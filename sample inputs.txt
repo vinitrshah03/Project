@@ -1,0 +1,9 @@
+cve_id = CVE-2017-12652, CVE-2007-5269, CVE-2017-12652, 
+
+cpe_id = cpe:2.3:a:libpng:libpng:0.8, cpe:2.3:a:microsoft:internet_explorer:8.0.6001:beta:*:*:*:*:*:*,  
+
+passwords = 00000000, CherrY@12#7, Password@1234 ....
+
+Shodan = Apache, Apache Tomcat, ftp, vsftpd ....
+
+Login = 

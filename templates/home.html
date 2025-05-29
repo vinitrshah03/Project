@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+    </head>
+    <body>
+        <header>
+            <div class="company-logo">SecureX</div>
+            <nav class="navbar">
+            <ul class="nav-items">
+                <li class="nav-item"><a href="{{url_for('downloads')}}" class="nav-link">DOWNLOADS</a></li>
+                <li class="nav-item"><a href="{{url_for('services')}}" class="nav-link">SERVICES</a></li>
+                <li class="nav-item"><a href="{{url_for('contact')}}" class="nav-link">CONTACT</a></li>
+                <li class="nav-item"><a href="{{url_for('logout')}}" class="nav-link">LOGOUT</a></li>
+            </ul>
+            </nav>
+            <div class="menu-toggle">
+            <i class="bx bx-menu"></i>
+            <i class="bx bx-x"></i>
+            </div>
+        </header>
+        {% block content %}
+            {% if data %}
+                <h1>{{data}}</h1>
+            {% endif %}
+        <br><br>
+        <div class="services-container">
+            <h2 class="section-title">🌍 The CIA Triad: Foundation of Cybersecurity</h2>
+            <hr>
+            <div class="section-content">
+                <br><br><p><strong>Confidentiality:</strong> Keeping sensitive information secure is the backbone of cybersecurity. Encryption, access control, and authentication help ensure that data is only accessible to authorized users.</p>
+                <br><br><p><strong>Integrity:</strong> Data must remain accurate and unaltered. Hashing, digital signatures, and checksums help maintain integrity, preventing tampering or corruption.</p>
+                <br><br><p><strong>Availability:</strong> Even the most secure data is useless if it’s not accessible. Redundancy, backups, and protection against DoS attacks help maintain availability, even during failures.</p>
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/CIA-Triad.jpg') }}" alt="CIA Triad" class="responsive-img">
+                </div>
+            </div>
+            <br><br><br>
+            <h2 class="section-title">🔍 Our Services</h2>
+            <hr>
+        
+            <div class="service">
+                <h3>🔑 Password Complexity Checker</h3>
+                <br><br><p>Weak passwords cause 81% of hacking-related breaches. Our tool analyzes your password’s strength, suggests improvements, and ensures compliance with modern security standards.</p>
+            </div>
+        
+            <hr>
+        
+            <div class="service">
+                <h3>🌐 Shodan Search</h3>
+                <br><br><p>Shodan exposes publicly available devices—used by hackers to find vulnerable IoT devices, webcams, and more. Our tool helps users secure their networks before cybercriminals exploit them.</p>
+            </div>
+        
+            <hr>
+        
+            <div class="service">
+                <h3>🖥️ CPE Search (Common Platform Enumeration)</h3>
+                <br><br><p>Tracking software and hardware vulnerabilities is crucial. Our CPE Search helps users identify system components, ensuring timely security patches and updates.</p>
+            </div>
+        
+            <hr>
+        
+            <div class="service">
+                <h3>⚠️ CVE Search (Common Vulnerabilities & Exposures)</h3>
+                <br><br><br><p>New vulnerabilities emerge daily. Our CVE Search tool helps businesses identify security threats and apply critical patches before hackers exploit them.</p>
+            </div>
+        
+            <hr>
+        
+            <p class="closing-text">With SecureX, you can take control of your cybersecurity today! Stay ahead of cyber threats with our powerful security tools.</p>
+        </div>          
+        <br><br>
+        
+        <footer>
+            <div class="footer-links">
+                <a href="{{url_for('login')}}">Search in Shodan</a>
+                <a href="{{url_for('login')}}">Passwords</a>
+                <a href="{{url_for('login')}}">Search CVE</a>
+                <a href="{{url_for('login')}}">Search CPE</a>
+            </div>
+            <div class="footer-social">
+                <a href="{{ url_for('follow_facebook') }}" class="footer-icon">
+                    <img src="{{ url_for('static', filename='images/fb_logo.png') }}" alt="Facebook Logo">
+                </a>
+                <a href="{{ url_for('follow_instagram') }}" class="footer-icon">
+                    <img src="{{ url_for('static', filename='images/insta_logo.png') }}" alt="Instagram Logo">
+                </a>
+            </div>
+        </footer>  
+        {% endblock %}
+    </body>
+</html>

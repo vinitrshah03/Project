@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Search Shodan</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+        <style>
+            .search-container {
+                width: 80%;
+                max-width: 900px;
+                margin: 50px auto;
+                padding: 40px 20px;
+                border-radius: 10px;
+                background: linear-gradient(to right, #89f7fe, #66a6ff);
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+                position: relative; 
+                min-height: 500px;  
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                align-items: flex-start;
+            }
+
+            .search-row {
+                display: flex;
+                width: 100%;
+                gap: 10px;  
+                margin-bottom: 0;
+            }
+
+            .search-row input[type="text"] {
+                padding: 10px;
+                width: 60%;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+            }
+
+            .search-row input[type="submit"] {
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                background: #0056b3;
+                color: white;
+                cursor: pointer;
+                height: 42px;
+            }
+
+            h1 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            input[type="text"] {
+                padding: 10px;
+                width: 60%;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+            }
+
+            input[type="submit"] {
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                background: #0056b3;
+                color: white;
+                cursor: pointer;
+            }
+
+            input[type="submit"]:hover {
+                background: #004494;
+            }
+
+            /* Scoped styling for results to avoid conflicts */
+            .results {
+                max-height: 400px;
+                overflow-y: auto;
+                padding: 15px;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.2);
+            }
+
+            .results ol {
+                padding-left: 20px;
+            }
+
+            .results ol li {
+                margin-bottom: 10px;
+                padding: 8px;
+                border-radius: 5px;
+                background: white;
+                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+                list-style-position: inside;
+            }
+            
+            .recommendations-box {
+                display: none;
+                width: 60%;  /* Match width of the search input box */
+                margin-top: 10px;  /* Space between search input and recommendations */
+                border: 2px solid #ccc;
+                border-radius: 5px;
+                background-color: white;
+                max-height: 150px;
+                overflow-y: auto;
+                position: relative;
+                margin-top: 0;
+            }
+
+            .recommendation-item {
+                border-bottom: 1px solid #ccc;
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            .recommendation-item:last-child {
+                border-bottom: none;
+            }
+
+            .recommendations-box.visible {
+                display: block;
+                border: 2px solid black;  /* Match the input focus border */
+                border-radius: 5px;
+            }
+
+            .recommendation-item:hover {
+                background-color: #f0f0f0; /* Highlight on hover */
+            }
+
+            .error-message {
+                color: red;
+                background-color: #f8d7da;
+                border: 1px solid #f5c6cb;
+                padding: 15px;
+                margin: 10px 0;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="company-logo">SecureX</div>
+            <nav class="navbar">
+                <ul class="nav-items">
+                    <li class="nav-item"><a href="{{url_for('home')}}" class="nav-link">HOME</a></li>
+                    <li class="nav-item"><a href="{{url_for('downloads')}}" class="nav-link">DOWNLOADS</a></li>
+                    <li class="nav-item"><a href="{{url_for('services')}}" class="nav-link">SERVICES</a></li>
+                    <li class="nav-item"><a href="{{url_for('contact')}}" class="nav-link">CONTACT</a></li>
+                    <li class="nav-item"><a href="{{url_for('logout')}}" class="nav-link">LOGOUT</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <i class="bx bx-menu"></i>
+                <i class="bx bx-x"></i>
+            </div>
+        </header>
+        <br><br>
+        {% block content %}
+            <div class="search-container">
+                <h1>Search in Shodan</h1>
+                <form action="#" method="post">
+                    <div class="search-row">
+                        <input type="text" id="searchInput" name="search" placeholder="Search Shodan" autocomplete="off">
+                        <input type="submit" value="Search">
+                    </div>
+                    <div id="recommendationsBox" class="recommendations-box">
+                        {% for rec in recommendations %}
+                            <div class="recommendation-item">{{ rec }}</div>
+                        {% endfor %}
+                    </div>                    
+                </form>
+                <br><br>
+                {% if data %}
+                    <div class="results">
+                        <ol type="1">
+                            {% for result in data %}
+                                <li><p>{{result['description']}}</p></li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                {% endif %}
+                {% if error_message %}
+                    <div class="error-message">
+                        <p>{{ error_message }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        {% endblock %}
+
+        <script>
+            const searchInput = document.getElementById('searchInput');
+            const recommendationsBox = document.getElementById('recommendationsBox');
+            const recommendationItems = document.querySelectorAll('.recommendation-item');
+
+            // Show recommendations when the search input is focused
+            searchInput.addEventListener('focus', () => {
+                recommendationsBox.classList.add('visible');
+            });
+
+            // Hide recommendations when focus is lost from search input
+            searchInput.addEventListener('blur', () => {
+                setTimeout(() => {
+                    recommendationsBox.classList.remove('visible');
+                }, 200);
+            });
+
+            // Add click event listener to each recommendation item to fill the search box
+            recommendationItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    searchInput.value = item.textContent;  // Fill the input box with clicked recommendation
+                    recommendationsBox.classList.remove('visible');  // Hide the recommendations box
+                });
+            });
+        </script>
+
+        <br><br>
+        <footer>
+            <div class="footer-links">
+                <a href="{{url_for('search_exploit')}}">Search in Shodan</a>
+                <a href="{{url_for('password_checker_tool')}}">Passwords</a>
+                <a href="{{url_for('cve')}}">Search CVE</a>
+                <a href="{{url_for('cpe')}}">Search CPE</a>
+            </div>
+            <div class="footer-social">
+                <a href="{{ url_for('follow_facebook') }}" class="footer-icon">
+                    <img src="{{ url_for('static', filename='images/fb_logo.png') }}" alt="Facebook Logo">
+                </a>
+                <a href="{{ url_for('follow_instagram') }}" class="footer-icon">
+                    <img src="{{ url_for('static', filename='images/insta_logo.png') }}" alt="Instagram Logo">
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>

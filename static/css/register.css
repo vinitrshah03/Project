@@ -1,0 +1,74 @@
+body {
+    background: black;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 100;
+}
+
+.wrapper {
+    background: #222; /* Matching login form box color */
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+    max-width: 350px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.register-title {
+    background: hsl(40,30,60); /* Matching login form header */
+    border-bottom: 0.5rem solid white;
+    color: white;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding: 0.5rem;
+    text-align: center;
+    text-shadow: 1px -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.form-line {
+    border: none;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    margin: 20px 0;
+}
+
+.form-element {
+    width: 100%;
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.form-element input {
+    width: 80%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: white;
+    border-radius: 5px;
+    transition: 250ms background ease-in;
+}
+
+.form-element input:focus {
+    background: white;
+    color: black;
+    transition: 250ms background ease-in;
+}
+
+button.btn-register {
+    background: transparent;
+    color: white;
+    font-size: 1.1em;
+    padding: 12px;
+    width: 100%;
+    border: 1px solid white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 250ms background ease-in;
+}
+
+button.btn-register:hover {
+    background: white;
+    color: black;
+    transition: 250ms background ease-in;
+}

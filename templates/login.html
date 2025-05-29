@@ -1,0 +1,211 @@
+<html>
+    <head>
+        <title>Login</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css')}}">
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+        <style>
+            /* Global body fix */
+            body {
+                display: block;
+                overflow: auto;
+                height: auto;
+                background-color: #0d0d0d; /* Darker background */
+            }
+
+            /* Center login form */
+            .login-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 80vh;
+                padding: 20px;
+            }
+
+            /* Updated login form */
+            .login-form {
+                background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+                box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+                padding: 30px;
+                max-width: 400px;
+                width: 100%;
+                text-align: center;
+            }
+
+            /* Lock icon */
+            .login-text {
+                margin-bottom: 20px; /* Extra space */
+            }
+
+            /* White separator line */
+            .separator {
+                width: 100%;
+                height: 1px;
+                background: white;
+                margin: 15px 0;
+                opacity: 0.5;
+            }
+
+            /* Input fields */
+            .login-username, .login-password {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 5px;
+                color: white;
+                display: block;
+                margin: 10px auto;
+                padding: 12px;
+                width: 90%;
+            }
+
+            /* Login button */
+            .login-submit {
+                background: white;
+                color: black;
+                padding: 12px;
+                width: 100%;
+                border-radius: 5px;
+                cursor: pointer;
+                border: none;
+                transition: 250ms ease-in-out;
+            }
+
+            .login-submit:hover {
+                background: #f8f8f8;
+            }
+
+            /* Google Login Button */
+            .google-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(145deg, #222, #333);
+                color: #f2f2f2;
+                border: 1px solid #444;
+                padding: 10px;
+                border-radius: 5px;
+                font-size: 16px;
+                text-decoration: none;
+                transition: 0.3s ease-in-out;
+            }
+
+            /* Google logo inside the button */
+            .google-btn img {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+            }
+
+            /* Hover effect */
+            .google-btn:hover {
+                background: linear-gradient(145deg, #333, #444);
+                color: white;
+                border-color: white;
+            }
+
+            /* Footer styles */
+            footer {
+                background-color: #0d0d0d;
+                color: white;
+                padding: 20px;
+                text-align: center;
+                position: relative;
+                bottom: 0;
+                width: 100%;
+            }
+
+            .footer-links {
+                margin-bottom: 10px;
+            }
+
+            .footer-links a {
+                color: white;
+                text-decoration: none;
+                margin: 0 10px;
+            }
+
+            .footer-social {
+                display: flex;
+                justify-content: center;
+            }
+
+            .footer-icon {
+                margin: 0 10px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="company-logo">SecureX</div>
+            <nav class="navbar">
+                <ul class="nav-items">
+                    <li class="nav-item"><a href="{{url_for('home')}}" class="nav-link">HOME</a></li>
+                    <li class="nav-item"><a href="{{url_for('services')}}" class="nav-link">SERVICES</a></li>
+                    <li class="nav-item"><a href="{{url_for('contact')}}" class="nav-link">CONTACT</a></li>
+                    <li class="nav-item"><a href="{{url_for('register')}}" class="nav-link">REGISTER</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <i class="bx bx-menu"></i>
+                <i class="bx bx-x"></i>
+            </div>
+        </header>
+
+        <div class="login-container">
+            {% block content %}
+                <form class="login-form" action="{{ url_for('login') }}" method="POST">
+                    <p class="login-text">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-lock fa-stack-1x"></i>
+                        </span>
+                    </p>
+
+                    <!-- White Line Between Lock Icon & Inputs -->
+                    <div class="separator"></div>
+
+                    <input type="email" class="login-username" name="username" required placeholder="Email" />
+                    <input type="password" class="login-password" name="password" required placeholder="Password" />
+
+                    <!-- White Line Between Inputs & Google Login -->
+                    <div class="separator"></div>
+
+                    <input type="submit" name="Login" value="Login" class="login-submit" />
+
+                    <!-- Google Login Button -->
+                    <div class="social-buttons">
+                        <a href="{{ url_for('login_google') }}" class="social-btn google-btn">
+                            <img src="{{ url_for('static', filename='images/google_logo.png') }}" alt="Google Logo"> Login with Google
+                        </a>
+                    </div>
+                    <br>
+                </form>
+
+                {% if data %}
+                    <p>{{data}}</p>
+                {% endif %}
+            {% endblock %}
+        </div>
+
+        <footer>
+            <div class="footer-links">
+                <a href="{{url_for('search_exploit')}}">Search in Shodan</a>
+                <a href="{{url_for('password_checker_tool')}}">Passwords</a>
+                <a href="{{url_for('cve')}}">Search CVE</a>
+                <a href="{{url_for('cpe')}}">Search CPE</a>
+            </div>
+            <div class="footer-social">
+                <a href="{{ url_for('follow_facebook') }}" class="footer-icon">
+                    <img src="{{ url_for('static', filename='images/fb_logo.png') }}" alt="Facebook Logo">
+                </a>
+                <a href="{{ url_for('follow_instagram') }}" class="footer-icon">
+                    <img src="{{ url_for('static', filename='images/insta_logo.png') }}" alt="Instagram Logo">
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>

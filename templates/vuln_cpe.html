@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Search CPE</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+        <style>
+            .search-container {
+                width: 80%;
+                max-width: 900px;
+                margin: 50px auto;
+                padding: 40px 20px;
+                border-radius: 10px;
+                background: linear-gradient(to right, #89f7fe, #66a6ff);
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+                position: relative; 
+                min-height: 500px;  
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                align-items: flex-start;
+            }
+
+            .search-row {
+                display: flex;
+                width: 100%;
+                gap: 10px;  
+                margin-bottom: 0;
+            }
+
+            .search-row input[type="text"] {
+                padding: 10px;
+                width: 60%;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+            }
+
+            .search-row input[type="submit"] {
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                background: #0056b3;
+                color: white;
+                cursor: pointer;
+                height: 42px;
+            }
+
+            h1 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            input[type="text"] {
+                padding: 10px;
+                width: 60%;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+            }
+
+            input[type="submit"] {
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                background: #0056b3;
+                color: white;
+                cursor: pointer;
+            }
+
+            input[type="submit"]:hover {
+                background: #004494;
+            }
+        
+            .cpe-results {
+                max-height: 400px;
+                overflow-y: auto;
+                padding: 15px;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.2);
+                margin-top: 20px;
+            }
+        
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                background: white;
+                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            }
+        
+            th {
+                background: #333;
+                color: white;
+                padding: 10px;
+                text-align: left;
+            }
+        
+            td {
+                background: white;
+                padding: 10px;
+                border: 1px solid #ccc;
+            }
+        
+            .recommendation-box {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    z-index: 9999; 
+    background-color: white;
+    display: none; 
+}
+
+.recommendation-box.visible {
+    display: block; 
+}
+
+.recommendation-box table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.recommendation-box td {
+    border: 1px solid #ddd;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.recommendation-box tr:hover {
+    background-color: #f0f0f0;
+}
+
+        </style>
+        
+    </head>
+    <body>
+        <header>
+            <div class="company-logo">SecureX</div>
+            <nav class="navbar">
+                <ul class="nav-items">
+                    <li class="nav-item"><a href="{{url_for('home')}}" class="nav-link">HOME</a></li>
+                    <li class="nav-item"><a href="{{url_for('downloads')}}" class="nav-link">DOWNLOADS</a></li>
+                    <li class="nav-item"><a href="{{url_for('services')}}" class="nav-link">SERVICES</a></li>
+                    <li class="nav-item"><a href="{{url_for('contact')}}" class="nav-link">CONTACT</a></li>
+                    <li class="nav-item"><a href="{{url_for('logout')}}" class="nav-link">LOGOUT</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <i class="bx bx-menu"></i>
+                <i class="bx bx-x"></i>
+            </div>
+        </header>
+        <br><br>
+        {% block content %}
+            <div class="search-container">
+                <h1>Search CPE's</h1>
+                <form action="#" method="POST" style="position: relative;">
+                    <div class="search-row" style="position: relative; width: 100%;">
+                        <input type="text" id="cpeInput" name="cpe" placeholder="Enter CPE ID" autocomplete="off">
+                        <input type="submit" value="Search">
+                        <br><br>
+                        <div id="recommendationBox" class="recommendation-box" style="display: none;">
+                            <table>
+                                {% for item in recommendations %}
+                                <tr>
+                                    <td>{{ item.title }}</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>                        
+                    </div>
+                </form>
+                <br><br><br>
+                {% if data %}
+                <div class="results">
+                    <h4>Search Results</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CVE ID</th>
+                                <th>Description</th>
+                                <th>Published Date</th>
+                                <th>CVSS Score</th>
+                                <th>CVSS Version</th>
+                                <th>EPSS</th>
+                                <th>Ransomware Campaign</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in data %}
+                            <tr>
+                                <td>{{ entry["CVE ID"] }}</td>
+                                <td>{{ entry["Description"][:100] }}...</td>
+                                <td>{{ entry["Published Date"] }}</td>
+                                <td>{{ entry["CVSS Score"] }}</td>
+                                <td>{{ entry["CVSS Version"] }}</td>
+                                <td>{{ entry["EPSS"] }}</td>
+                                <td>{{ entry["Ransomware Campaign"] if entry["Ransomware Campaign"] else "N/A" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+
+                {% if error_message %}
+                <div class="error-message">
+                    <p>{{ error_message }}</p>
+                </div>
+                {% endif %}
+            </div>
+        {% endblock %}
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+            const input = document.getElementById("cpeInput");
+            const box = document.getElementById("recommendationBox");
+
+            input.addEventListener('focus', () => {
+                box.style.display = 'block';
+            });
+
+            input.addEventListener('blur', () => {
+                setTimeout(() => {
+                    box.style.display = 'none';
+                }, 200);
+            });
+        });
+
+        </script>
+
+                
+        </div>
+        <br><br>
+        <footer>
+            <div class="footer-links">
+                <a href="{{url_for('search_exploit')}}">Search in Shodan</a>
+                <a href="{{url_for('password_checker_tool')}}">Passwords</a>
+                <a href="{{url_for('cve')}}">Search CVE</a>
+                <a href="{{url_for('cpe')}}">Search CPE</a>
+            </div>
+            <div class="footer-social">
+                <a href="{{ url_for('follow_facebook') }}" class="footer-icon">
+                    <img src="{{ url_for('static', filename='images/fb_logo.png') }}" alt="Facebook Logo">
+                </a>
+                <a href="{{ url_for('follow_instagram') }}" class="footer-icon">
+                    <img src="{{ url_for('static', filename='images/insta_logo.png') }}" alt="Instagram Logo">
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Services</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/services.css') }}">
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+    </head>
+    <body>
+        <header>
+            <div class="company-logo">SecureX</div>
+            <nav class="navbar">
+            <ul class="nav-items">
+                <li class="nav-item"><a href="{{url_for('home')}}" class="nav-link">HOME</a></li>
+                <li class="nav-item"><a href="{{url_for('downloads')}}" class="nav-link">DOWNLOADS</a></li>
+                <li class="nav-item"><a href="{{url_for('contact')}}" class="nav-link">CONTACT</a></li>
+                <li class="nav-item"><a href="{{url_for('logout')}}" class="nav-link">LOGOUT</a></li>
+            </ul>
+            </nav>
+            <div class="menu-toggle">
+            <i class="bx bx-menu"></i>
+            <i class="bx bx-x"></i>
+            </div>
+        </header>
+
+        <main>
+            <section class="services-section">
+                <h1>Our Services</h1>
+                <p>We offer a range of cybersecurity tools to help you analyze vulnerabilities and secure your systems.</p>
+                <div class="services-container">
+                    <div class="service-card" onclick="location.href=`{{ url_for('search_exploit') }}`">
+                        <h2>Shodan Search</h2>
+                        <p>Search for exploits in the Shodan database to identify potential vulnerabilities.</p>
+                    </div>
+                    <div class="service-card" onclick="location.href=`{{ url_for('password_checker_tool') }}`">
+                        <h2>Password Strength Checker</h2>
+                        <p>Check the strength of your passwords and get suggestions for stronger security.</p>
+                    </div>
+                    <div class="service-card" onclick="location.href=`{{ url_for('cve') }}`">
+                        <h2>Search CVE</h2>
+                        <p>Find information about known vulnerabilities using the CVE (Common Vulnerabilities and Exposures) database.</p>
+                    </div>
+                    <div class="service-card" onclick="location.href=`{{ url_for('cpe') }}`">
+                        <h2>Search CPE</h2>
+                        <p>Look up CPE (Common Platform Enumeration) details to identify affected products.</p>
+                    </div>
+                    
+                </div>
+            </section>
+        </main>
+    
+        <footer>
+            <div class="footer-links">
+                <a href="{{url_for('search_exploit')}}">Search in Shodan</a>
+                <a href="{{url_for('password_checker_tool')}}">Passwords</a>
+                <a href="{{url_for('cve')}}">Search CVE</a>
+                <a href="{{url_for('cpe')}}">Search CPE</a>
+            </div>
+            <div class="footer-social">
+                <a href="{{ url_for('follow_facebook') }}" class="footer-icon">
+                    <img src="{{ url_for('static', filename='images/fb_logo.png') }}" alt="Facebook Logo">
+                </a>
+                <a href="{{ url_for('follow_instagram') }}" class="footer-icon">
+                    <img src="{{ url_for('static', filename='images/insta_logo.png') }}" alt="Instagram Logo">
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>
