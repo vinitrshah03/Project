@@ -46,7 +46,7 @@ Project/
 │
 ├── app.py                    # Main Flask application entry point
 ├── config.py                 # Configuration settings (API keys, constants, etc.)
-├── recommender.py            # AI-based recommendation logic
+├── recommender.py            # AI-based recommendation logic (under development)
 ├── requirements.txt          # List of dependencies
 ├── login_register.sql        # MySQL database schema for users
 ├── sample inputs.txt         # Sample inputs for testing
